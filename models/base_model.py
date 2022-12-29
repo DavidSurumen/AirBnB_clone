@@ -7,11 +7,21 @@ from datetime import datetime
 class BaseModel():
     """Defines all common attributes and methods for other classes."""
 
-    def __init__(self):
-        """constructor."""
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = self.created_at
+    def __init__(self, *args, **kwargs):
+        """constructor of a BaseModel."""
+        if len(kwargs) != 0:
+            for key, val in kwargs.items():
+                if key == '__class__':
+                    pass
+                elif key == 'created_at' or \
+                        key == 'updated_at':
+                    self.key = datetime.fromisoformat(val)
+                else:
+                    self.key = val
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.today()
+            self.updated_at = self.created_at
 
     def __str__(self):
         """Specifies value to be printed by __str__()"""
