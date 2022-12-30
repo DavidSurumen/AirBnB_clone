@@ -14,8 +14,7 @@ class BaseModel:
         self.updated_at = datetime.now()
 
     def __str__(self):
-        """Returns a human-readable string representation
-        of an instance."""
+        """Returns a human-readable string repr of an instance."""
 
         return "[{}] ({}) {}".\
             format(type(self).__name__, self.id, self.__dict__)
@@ -23,12 +22,11 @@ class BaseModel:
     def save(self):
         """Updates the updated_at attribute
         with the current datetime."""
-
         self.updated_at = datetime.now()
 
     def to_dict(self):
         """Returns a dictionary representation of an instance."""
-
+        
         my_dict = self.__dict__.copy()
         my_dict["__class__"] = type(self).__name__
         my_dict["created_at"] = my_dict["created_at"].isoformat()
