@@ -11,9 +11,7 @@ class BaseModel():
         """constructor of a BaseModel."""
         if kwargs is not None and kwargs != {}:
             for key, val in kwargs.items():
-                if key == '__class__':
-                    pass
-                elif key == 'created_at' or \
+                if key == 'created_at' or \
                         key == 'updated_at':
                     self.__dict__[key] = datetime.fromisoformat(val)
                 else:
