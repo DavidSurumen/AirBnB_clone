@@ -15,9 +15,9 @@ class BaseModel():
                     pass
                 elif key == 'created_at' or \
                         key == 'updated_at':
-                    self.key = datetime.fromisoformat(val)
+                    self.__dict__[key] = datetime.fromisoformat(val)
                 else:
-                    self.key = val
+                    self.__dict__[key] = val
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.today()
@@ -38,5 +38,6 @@ class BaseModel():
         instance."""
         dict_ = self.__dict__.copy()
         dict_['created_at'] = dict_['created_at'].isoformat()
+        dict_['updated_at'] = dict_['updated_at'].isoformat()
         dict_['__class__'] = self.__class__.__name__
         return dict_
