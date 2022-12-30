@@ -9,7 +9,7 @@ class BaseModel():
 
     def __init__(self, *args, **kwargs):
         """constructor of a BaseModel."""
-        if len(kwargs) != 0:
+        if kwargs is not None and kwargs != {}:
             for key, val in kwargs.items():
                 if key == '__class__':
                     pass
