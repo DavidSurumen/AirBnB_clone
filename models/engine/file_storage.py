@@ -19,7 +19,7 @@ class FileStorage:
 
     def new(self, obj):
         """sets in '__objects' the 'obj' with key <obj class name>.id"""
-        
+
         key = '{}.{}'.format(type(obj).__name__, obj.id)
         FileStorage.__objects[key] = obj.to_dict()
 
@@ -27,14 +27,14 @@ class FileStorage:
         """serializes __objects to the JSON file."""
 
         full_name = os.path.join(FileStorage.__file_path, 'file.json')
-        
+
         with open(full_name, 'w', encoding='UTF-8') as fp:
-            json.dump(FileStorage.__objects, fp, indent = 4)
+            json.dump(FileStorage.__objects, fp, indent=4)
 
     def reload(self):
         """deserializes the JSON file to __objects if __file_path
         exists."""
-        
+
         path = FileStorage.__file_path + 'file.json'
         if os.path.isfile(path):
             with open(path, 'r', encoding='UTF-8') as fp:
