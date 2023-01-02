@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
 
         if clas:
             if clas not in HBNBCommand.__classes:
-                print("** class doesn't exist **\n")
+                print("** class doesn't exist **")
             else:
                 obj = eval(clas)()
                 obj.save()
