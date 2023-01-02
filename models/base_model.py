@@ -34,7 +34,7 @@ class BaseModel():
     def save(self):
         """updates the public instance attribute 'updated_at' with the current
         datetime."""
-
+        from models import storage
         self.updated_at = datetime.utcnow()
         # storage.new(self)   # -> this does not really have to be there.
         storage.save()
