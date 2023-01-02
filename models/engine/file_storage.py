@@ -10,9 +10,6 @@ class FileStorage:
     __file_path = ''  # path to the JSON file
     __objects = {}    # will store all objects by <class name>.id
 
-    def __init__(self):
-        """constructor."""
-
     def all(self):
         """returns the dictionary __objects."""
         return FileStorage.__objects
