@@ -11,7 +11,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     __classes = {
-            "BaseModel",
+            "BaseModel"
             }
 
     def emptyline(self):
@@ -38,9 +38,14 @@ class HBNBCommand(cmd.Cmd):
         """doc for EOF command."""
         print("Exits the interpreter when Crtl-D is pressed.\n")
 
-    def do_create(self, clas):
+    def do_create(self, args):
         """create command: create a new instance of BaseModel, save it, and
-        print its id."""
+        print its id.\n
+        Usage: create <class>
+        """
+        arg_list = args.split(' ')
+        clas = arg_list[0]
+
         if clas:
             if clas not in HBNBCommand.__classes:
                 print("** class doesn't exist **\n")
