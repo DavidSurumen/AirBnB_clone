@@ -7,7 +7,7 @@ import os
 class FileStorage:
     """Serializes instances to a JSON file and deserializes JSON file
     to instances."""
-    __file_path = ''  # path to the JSON file
+    __file_path = 'file.json'  # path to the JSON file
     __objects = {}    # will store all objects by <class name>.id
 
     def all(self):
@@ -28,9 +28,7 @@ class FileStorage:
         for key, val in obj_dict.items():
             obj_dict[key] = val.to_dict()
 
-        full_name = os.path.join(FileStorage.__file_path, 'file.json')
-
-        with open(full_name, 'w', encoding='UTF-8') as fp:
+        with open(FileStorage.__file_path, 'w', encoding='UTF-8') as fp:
             json.dump(obj_dict, fp, indent=4)
 
     def reload(self):
@@ -38,7 +36,7 @@ class FileStorage:
         from models.base_model import BaseModel
 
         rel_dict = {}
-        path = FileStorage.__file_path + 'file.json'
+        path = FileStorage.__file_path
 
         if os.path.isfile(path):
             with open(path, 'r', encoding='UTF-8') as fp:
