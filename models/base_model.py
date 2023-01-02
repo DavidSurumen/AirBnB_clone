@@ -21,7 +21,7 @@ class BaseModel():
                     self.__dict__[key] = val
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
+            self.created_at = datetime.now()
             storage.new(self)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class BaseModel():
     def save(self):
         """updates the public instance attribute 'updated_at' with the current
         datetime."""
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         storage.new(self)   # to add the attribute 'update_now', and any other
         storage.save()
 
