@@ -54,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
                 obj.save()
                 print(obj.id)
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_show(self, args):
         """show command: print the string representation of an instance
