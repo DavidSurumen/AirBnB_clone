@@ -2,9 +2,15 @@
 """Defines the HBnB console."""
 import cmd
 import re
+from shlex import split
 from models import storage
 from models.base_model import BaseModel
-from shlex import split
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 def parse(arg):
@@ -34,6 +40,12 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     __classes = {
         "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
     }
 
     def emptyline(self):
@@ -132,6 +144,16 @@ class HBNBCommand(cmd.Cmd):
                 elif len(argl) == 0:
                     objl.append(obj.__str__())
             print(objl)
+
+    def do_count(self, arg):
+        """Usage: count <class> or <class>.count()
+        Retrieve the number of instances of a given class."""
+        argl = parse(arg)
+        count = 0
+        for obj in storage.all().values():
+            if argl[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
 
     def do_update(self, arg):
         """Usage: update <class> <id> <attribute_name> <attribute_value> or
