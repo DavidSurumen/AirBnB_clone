@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             key = '{}.{}'.format(args_list[0], args_list[1])
             if key not in obj_dict.keys():
-                print('** instance not found **')
+                print('** no instance found **')
 
             elif len(args_list) == 2:
                 print('** attribute name missing **')
