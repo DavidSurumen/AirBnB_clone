@@ -111,7 +111,7 @@ class HBNBCommand(cmd.Cmd):
         obj_dict = storage.all()
 
         if clas and clas not in HBNBCommand.__classes:
-            print('** class doesn\'t exist')
+            print('** class doesn\'t exist **')
         else:
             for key in obj_dict.keys():
                 print(obj_dict[key])
