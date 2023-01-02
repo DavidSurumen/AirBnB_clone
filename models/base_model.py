@@ -2,6 +2,7 @@
 """This module defines the class BaseModel."""
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel():
@@ -19,7 +20,6 @@ class BaseModel():
                 else:
                     self.__dict__[key] = val
         else:
-            from models import storage
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             storage.new(self)
@@ -33,7 +33,6 @@ class BaseModel():
     def save(self):
         """updates the public instance attribute 'updated_at' with the current
         datetime."""
-        from models import storage
         self.updated_at = datetime.utcnow()
         storage.new(self)   # -> this does not really have to be there.
         storage.save()
