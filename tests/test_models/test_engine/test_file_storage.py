@@ -26,7 +26,7 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """tests the new() method."""
 
-        BaseModel()  # calls storage.new(), creates a new object
+        BaseModel().save()  # calls storage.new(), creates a new object
         test_dict = FileStorage._FileStorage__objects
 
         self.assertTrue(bool(test_dict), '__objects dict is empty')
@@ -39,31 +39,30 @@ class TestFileStorage(unittest.TestCase):
 
         for key in test_dict.keys():
             self.assertEqual(type(key), str, 'key should be type str')
-            self.assertEqual(type(test_dict[key]), dict,
-                             'must store dictionaries')
+            self.assertEqual(type(test_dict[key]).__name__, 'BaseModel',
+                             '__objects dict should store objects.')
 
     def test_save(self):
         """asserts that __objects dict is serialized to a JSON file"""
 
         self.obj.save()
 
-        file_ = os.path.join(FileStorage._FileStorage__file_path, 'file.json')
+        file_ = FileStorage._FileStorage__file_path
         self.assertTrue(os.path.isfile(file_), 'file does not exist')
 
     def test_reload(self):
         """tests the reload() method."""
 
-        BaseModel()   # create a new test object - constructor calls new()
-        self.obj.save()   # persist the new object to a file.
+        BaseModel()   # create a new test object
         self.obj.reload()   # reload the object to the dict variable __objects
 
         dct = FileStorage._FileStorage__objects
         self.assertTrue(bool(dct), 'reloaded dictionary must not be empty')
 
     def tearDown(self):
-        """cleans up afters each run of a test."""
+        """cleans up after each run of a test."""
 
         FileStorage._FileStorage__objects = {}  # resets the variable
-        fl = os.path.join(FileStorage._FileStorage__file_path, 'file.json')
+        fl = FileStorage._FileStorage__file_path
         if os.path.isfile(fl):
             os.remove(fl)
