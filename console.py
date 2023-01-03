@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """Contains the entry point of the command interpreter."""
 import cmd
-from models.base_model import BaseModel
 from models import storage
+from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -11,7 +12,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     __classes = {
-            "BaseModel"
+            "BaseModel",
+            "User"
             }
 
     def emptyline(self):
@@ -112,13 +114,17 @@ class HBNBCommand(cmd.Cmd):
 
         if clas and clas not in HBNBCommand.__classes:
             print('** class doesn\'t exist **')
+        elif clas:
+            for key in obj_dict.keys():
+                if clas in key:
+                    print(obj_dict[key])
         else:
             for key in obj_dict.keys():
                 print(obj_dict[key])
 
     def do_update(self, args):
         """update command: updates an instance based on the class name
-        and id by adding or updating an attribute, and save the chang
+        and id by adding or updating an attribute, and save the change
         into the JSON file.\n
         Usage <class name> <id> <attribute name> "<attribute value>"
         """
