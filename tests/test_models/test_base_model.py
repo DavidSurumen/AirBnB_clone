@@ -14,6 +14,7 @@ class TestBaseModel(unittest.TestCase):
         """setup code to be ran for every test."""
 
         self.obj = BaseModel()  # for the tests that need
+        self.obj.save()
 
     def test_has_attributes(self):
         """Asserts that instance attributes are created."""
@@ -31,12 +32,10 @@ class TestBaseModel(unittest.TestCase):
         """Tests that 'updated_at' is not having the same
         value as 'created_at'."""
 
-        self.obj.save()
         self.assertNotEqual(self.obj.updated_at, self.obj.created_at)
 
     def test_to_dict(self):
-        """Asserts that the method to_dict() returns a dictionary from the
-        __dict__ of an instance."""
+        """Asserts that the method to_dict() returns a dictionary."""
 
         dct = self.obj.to_dict()
         self.assertTrue(type(dct), dict)
@@ -60,7 +59,6 @@ class TestBaseModel(unittest.TestCase):
 
         FileStorage._FileStorage__objects = {}    # resets the attribute
 
-        fl = os.path.join(FileStorage._FileStorage__file_path,
-                          'file.json')    # path to the saved file
+        fl = FileStorage._FileStorage__file_path    # path to the saved file
         if os.path.isfile(fl) is True:
             os.remove(fl)

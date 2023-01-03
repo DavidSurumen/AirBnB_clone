@@ -20,6 +20,17 @@ class FileStorage:
         key = '{}.{}'.format(type(obj).__name__, obj.id)
         FileStorage.__objects[key] = obj
 
+    def classes(self):
+        """Returns a dictionary of valid classes - for the serialization-
+        deserialization process."""
+        from models.base_model import BaseModel
+        from models.user import User
+
+        classes = {"BaseModel": BaseModel,
+                   "User": User
+                   }
+        return classes
+
     def save(self):
         """serializes __objects to the JSON file."""
 
@@ -33,7 +44,6 @@ class FileStorage:
 
     def reload(self):
         """loads storage dictionary from file."""
-        from models.base_model import BaseModel
 
         rel_dict = {}
         path = FileStorage.__file_path
@@ -43,4 +53,5 @@ class FileStorage:
                 rel_dict = json.load(fp)
 
         for key, val in rel_dict.items():
-            FileStorage.__objects[key] = BaseModel(**val)
+            class_name = key.split('.')[0]
+            FileStorage.__objects[key] = self.classes()[class_name](**val)
