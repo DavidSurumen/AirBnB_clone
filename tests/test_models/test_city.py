@@ -10,7 +10,7 @@ class TestCity(unittest.TestCase):
 
     def setUp(self):
         """sets up the tests."""
-        
+
         self.obj = City()
 
     def test_parent(self):

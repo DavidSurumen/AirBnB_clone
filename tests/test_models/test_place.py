@@ -21,7 +21,7 @@ class TestPlace(unittest.TestCase):
 
     def test_hasattr(self):
         """Tests the Place has the right public attributes."""
-        
+
         self.assertTrue(hasattr(self.obj, 'city_id'))
         self.assertTrue(hasattr(self.obj, 'user_id'))
         self.assertTrue(hasattr(self.obj, 'name'))
