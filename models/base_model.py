@@ -42,6 +42,9 @@ class BaseModel():
         instance."""
         dict_ = self.__dict__.copy()
         dict_['created_at'] = dict_['created_at'].isoformat()
-        dict_['updated_at'] = dict_['updated_at'].isoformat()
+        
+        if dict_.get('updated_at'):
+            dict_['updated_at'] = dict_['updated_at'].isoformat()
+
         dict_['__class__'] = type(self).__name__
         return dict_
