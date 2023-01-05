@@ -9,6 +9,27 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+import re
+from shlex import split
+
+
+def parse(arg):
+    curly_braces = re.search(r"\{(.*?)\}", arg)
+    brackets = re.search(r"\[(.*?)\]", arg)
+    
+    if curly_braces is None:
+        if brackets is None:
+            return [i.strip(",") for i in split(arg)]
+        else:
+            lexer = split(arg[:brackets.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
+            return retl
+    else:
+        lexer = split(arg[:curly_braces.span()[0]])
+        retl = [i.strip(",") for i in lexer]
+        retl.append(brackets.group())
+        return retl
 
 
 class HBNBCommand(cmd.Cmd):
@@ -25,6 +46,28 @@ class HBNBCommand(cmd.Cmd):
             "Amenity",
             "Review"
             }
+
+    def default(self, arg):
+        """Default behaviour for cmd module when input is invalid."""
+
+        argdict = {
+                "all": self.do_all,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "count": self.do_count,
+                "update": self.do_update
+                }
+        match = re.search(r"\.", arg)
+        if match is not None:
+            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", argl[1])
+            if match is not None:
+                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in argdict.keys():
+                    call = "{} {}".format(argl[0], command[1])
+                    return argdict[command[0]](call)
+        print("** Uknown syntax: {}".format(arg))
+        return False
 
     def emptyline(self):
         """Do nothing if received an empty line."""
@@ -119,7 +162,13 @@ class HBNBCommand(cmd.Cmd):
         """all command: prints all string representation of all instances
         based or not on the class name."""
 
-        clas = args.split(' ')[0]
+        args_list = parse(args)
+
+        if len(args_list) > 0:
+            clas = args_list[0]
+        else:
+            clas = None
+
         obj_dict = storage.all()
 
         if clas and clas not in HBNBCommand.__classes:
@@ -166,6 +215,18 @@ class HBNBCommand(cmd.Cmd):
 
                 obj_dict[key].__dict__[attrb] = val
                 obj_dict[key].save()
+
+    def do_count(self, args):
+        """count command: returns the number of instances of a class."""
+        
+        clas = parse(args)[0]
+        count = 0
+        objects = storage.all().values()
+
+        for obj in objects:
+            if clas == type(obj).__name__:
+                count += 1
+        print(count)
 
 
 if __name__ == '__main__':
