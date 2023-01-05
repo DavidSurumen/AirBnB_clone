@@ -42,7 +42,7 @@ class BaseModel():
         instance."""
         dict_ = self.__dict__.copy()
         dict_['created_at'] = dict_['created_at'].isoformat()
-        
+
         if dict_.get('updated_at'):
             dict_['updated_at'] = dict_['updated_at'].isoformat()
 
