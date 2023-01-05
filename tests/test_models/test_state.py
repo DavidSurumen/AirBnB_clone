@@ -18,7 +18,12 @@ class TestState(unittest.TestCase):
         self.assertTrue(isinstance(self.obj, State))
         self.assertTrue(isinstance(self.obj, BaseModel))
 
-    def test_attr(self):
+    def test_hasattr(self):
         """Tests the attributes of the State class"""
 
         self.assertTrue(hasattr(self.obj, 'name'))
+
+    def test_atrr_values(self):
+        """Tests the default value for attributes."""
+
+        self.assertEqual(self.obj.name, '')
