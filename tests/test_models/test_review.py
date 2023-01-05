@@ -25,3 +25,10 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(self.obj, 'place_id'))
         self.assertTrue(hasattr(self.obj, 'user_id'))
         self.assertTrue(hasattr(self.obj, 'text'))
+
+    def test_attr_values(self):
+        """Tests default values for attributes."""
+
+        self.assertEqual(self.obj.place_id, '')
+        self.assertEqual(self.obj.user_id, '')
+        self.assertEqual(self.obj.text, '')

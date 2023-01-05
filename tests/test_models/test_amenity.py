@@ -24,3 +24,8 @@ class TestAmenity(unittest.TestCase):
         attributes.
         """
         self.assertTrue(hasattr(self.obj, 'name'))
+
+    def test_attr_values(self):
+        """Tests the default value of attributes."""
+
+        self.assertEqual(self.obj.name, '')

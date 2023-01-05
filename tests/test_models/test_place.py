@@ -33,3 +33,18 @@ class TestPlace(unittest.TestCase):
         self.assertTrue(hasattr(self.obj, 'latitude'))
         self.assertTrue(hasattr(self.obj, 'longitude'))
         self.assertTrue(hasattr(self.obj, 'amenity_ids'))
+
+    def test_attr_values(self):
+        """Tests the default values for attributes."""
+        
+        self.assertEqual(self.obj.city_id, '')
+        self.assertEqual(self.obj.user_id, '')
+        self.assertEqual(self.obj.name, '')
+        self.assertEqual(self.obj.description, '')
+        self.assertEqual(self.obj.number_rooms, 0)
+        self.assertEqual(self.obj.number_bathrooms, 0)
+        self.assertEqual(self.obj.max_guest, 0)
+        self.assertEqual(self.obj.price_by_night, 0)
+        self.assertEqual(self.obj.latitude, 0)
+        self.assertEqual(self.obj.longitude, 0)
+        self.assertEqual(self.obj.amenity_ids, [])
