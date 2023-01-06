@@ -16,7 +16,7 @@ from shlex import split
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
-    
+
     if curly_braces is None:
         if brackets is None:
             return [i.strip(",") for i in split(arg)]
@@ -117,16 +117,16 @@ class HBNBCommand(cmd.Cmd):
         """
         obj_dict = storage.all()
 
-        args_list = args.split(' ')
-        clas = args_list[0]
+        args_list = parse(args)
 
-        if not clas:
+        if len(args_list) == 0:
             print("** class name missing **")
-        elif clas not in HBNBCommand.__classes:
+        elif args_list[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         elif len(args_list) == 1:
             print("** instance id missing **")
         else:
+            clas = args_list[0]
             id_ = args_list[1]
             key = '{}.{}'.format(clas, id_)
 
@@ -140,17 +140,18 @@ class HBNBCommand(cmd.Cmd):
         and save the changes into the JSON file."""
 
         obj_dict = storage.all()
+        args_list = parse(args)
 
-        if len(args) == 0:
+        if len(args_list) == 0:
             print('** class name missing **')
         else:
-            clas = args.split(' ')[0]
+            clas = args_list[0]
             if clas not in HBNBCommand.__classes:
                 print('** class doesn\'t exist **')
-            elif len(args.split(' ')) == 1:
+            elif len(args_list) == 1:
                 print('** instance id missing **')
             else:
-                id_ = args.split(' ')[1]
+                id_ = args_list[1]
                 key = '{}.{}'.format(clas, id_)
                 if key not in obj_dict.keys():
                     print('** no instance found **')
@@ -162,13 +163,7 @@ class HBNBCommand(cmd.Cmd):
         """all command: prints all string representation of all instances
         based or not on the class name."""
 
-        args_list = parse(args)
-
-        if len(args_list) > 0:
-            clas = args_list[0]
-        else:
-            clas = None
-
+        clas = args.split(' ')[0]
         obj_dict = storage.all()
 
         if clas and clas not in HBNBCommand.__classes:
@@ -188,11 +183,9 @@ class HBNBCommand(cmd.Cmd):
         Usage <class name> <id> <attribute name> "<attribute value>"
         """
         obj_dict = storage.all()
-        args_list = args.split(' ')
+        args_list = parse(args)
 
-        clas = args_list[0]
-
-        if not clas:
+        if len(args_list) == 0:
             print('** class name missing **')
         elif args_list[0] not in HBNBCommand.__classes:
             print('** class doesn\'t exist **')
@@ -218,8 +211,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, args):
         """count command: returns the number of instances of a class."""
-        
-        clas = parse(args)[0]
+
+        clas = args.split(' ')[0]
         count = 0
         objects = storage.all().values()
 
