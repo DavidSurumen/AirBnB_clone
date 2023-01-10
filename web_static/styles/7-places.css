@@ -1,0 +1,33 @@
+/* 
+ * === Rules for Places section ===
+ */
+
+.places {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.places h1 {
+	text-align: left;
+	font-size: 30px;
+	margin: .67em 0 .67em .5em;
+	font-weight: bold;
+	display: block;
+	flex-basis: 100%;
+}
+
+.places article {
+	width: 390px;
+	padding: 20px;
+	margin: 20px;
+	border: #FF5A5F 1px solid;
+	border-radius: 4px;
+	position: relative;
+}
+
+.places article h2 {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
